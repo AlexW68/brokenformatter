@@ -1,0 +1,71 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Counter</MudText>
+<MudText Class="mb-4">Current count: @currentCount</MudText>
+<MudButton Color="Color.Primary" Variant="Variant.Filled" @onclick="IncrementCount">Click me</MudButton>
+
+
+<MudGrid>
+    <MudItem sm=12 md=6 lg=4>
+        <MudColorPicker Label="Foreground Colour"
+                        AdornmentColor=MudBlazor.Color.Primary
+                        Adornment=Adornment.End
+                        Variant=@MudVariant
+                        @bind-Text=@_associateStatus.ForegroundColour
+                        Placeholder="Select Foreground Colour"/>
+    </MudItem>
+</MudGrid>
+
+
+@* <MudColorPicker Label="Foreground Colour" *@
+@*                 Editable=blazorUI.MudColorPickerEditable *@
+@*                 Elevation=blazorUI.MudColourPickerElevation *@
+@*                 Rounded=blazorUI.MudColorPickerRounded *@
+@*                 AdornmentIcon=@blazorUI.ColourIcon *@
+@*                 AdornmentColor=MudBlazor.Color.Primary *@
+@*                 Adornment=Adornment.End *@
+@*                 Variant=@blazorUI.MudVariant *@
+@*                 @bind-Text=@_associateStatus.ForegroundColour *@
+@*                 Placeholder="Select Foreground Colour"/> *@
+
+
+
+
+@code {
+    private int currentCount = 0;
+
+
+    // I have a singleton class in all my projects that styles all the components, a single place
+    // that changes the styles, so the line below normally exists in that singleton I have moved it here to prove 
+    // the point.
+
+    // if the line above the @bind-text is Variant=MudBlazor.Variant.Outlined it works as soon as you do Variant=@MudVariant
+    // it breaks the formatter, if you swap the lines around so the @bind-text is first it works, so it is the Variant=@MudVariant
+
+    // CTRL-ALT-ENTER or CTRL-K-D will break the formatting, leading to code that won't compile.
+    // as a workaround I can move the lines around so that the @bind-text is earlier in the component.
+
+
+    private MudBlazor.Variant MudVariant = MudBlazor.Variant.Outlined;
+
+
+    private AssociateStatus _associateStatus = new AssociateStatus();
+    private string _foregroundColour = "#000000";
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    private async Task OnValidSubmit(EditContext context)
+    {
+    }
+
+    private class AssociateStatus
+    {
+        public string ForegroundColour { get; set; }
+    }
+
+}
